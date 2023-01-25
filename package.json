@@ -1,0 +1,11 @@
+{
+  "name": "quan_li_thong_tin_dich_vu_bao_tri",
+  "version": "1.0.0",
+  "description": "Do an Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LeQuangKhai",
+  "license": "ISC"
+}
