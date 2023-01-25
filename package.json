@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri/issues"
   },
-  "homepage": "https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri#readme"
+  "homepage": "https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
