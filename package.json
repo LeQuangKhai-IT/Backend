@@ -1,11 +1,19 @@
 {
   "name": "quan_li_thong_tin_dich_vu_bao_tri",
   "version": "1.0.0",
-  "description": "Do an Web",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "LeQuangKhai",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri.git"
+  },
+  "author": "Le Quang Khai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri/issues"
+  },
+  "homepage": "https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri#readme"
 }
