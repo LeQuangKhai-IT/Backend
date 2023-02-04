@@ -1,10 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
-import viewEngine from "./config/viewEngine"
-import initWebRouters from "./route/routeAdmin"
-import connection from "./database/init.redis"
-
-import 'dotenv/config'
+import configViewEngine from "../src/config/viewEngine.js"
+import initWebRouters from "./route/router-staff.js"
+import { } from "dotenv/config.js";
 let PORT = process.env.PORT || 8751;
 
 /* create an express app and use JSON */
@@ -12,9 +10,10 @@ let app = new express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-viewEngine(app)
+configViewEngine(app)
 initWebRouters(app)
-connection()
+
+
 app.listen(PORT, () => {
     console.log("Server listening on port: " + PORT);
 })
