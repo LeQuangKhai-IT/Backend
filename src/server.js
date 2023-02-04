@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import configViewEngine from "../src/config/viewEngine.js"
 import initWebRouters from "./route/router-staff.js"
-import { } from "dotenv/config.js";
+import 'dotenv/config.js'
 let PORT = process.env.PORT || 8751;
 
 /* create an express app and use JSON */
