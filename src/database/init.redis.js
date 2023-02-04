@@ -1,22 +1,17 @@
-import Redis from 'ioredis'
+import { createClient } from 'redis'
+import { Client } from 'redis-om'
 
-const client = async () => {
+const url = process.env.REDIS_URL
 
-    const redisClient = new Redis({
-        url: process.env.REDIS_URI
-    });
+const connection = async () => {
+    const redis = createClient({ url })
+    redis.connect()
 
-    redisClient.on('connect', () => {
-        console.log('Redis client connected !');
-    });
+    const client = await new Client().use(redis)
 
-    redisClient.on("error", (error) => {
-        console.error(error);
-    });
-
-
-};
+    const value = await client.execute(['GET', 'test'])
+    console.log(value)
+}
 
 
-module.exports = client;
-
+module.exports = connection;
