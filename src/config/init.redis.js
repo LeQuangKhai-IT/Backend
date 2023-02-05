@@ -5,8 +5,30 @@ import 'dotenv/config.js'
 const url = process.env.REDIS_URL
 
 /* create and open the Redis OM Client */
-const client = await new Client().open(url)
-const value = await client.execute(['json.get', 'Person:01GR9NEC0CP6YVHS7V0PEDRDP7'])
-console.log(value)
+const client = await new Client().open(url).catch(
+    console.log('Redis database connected!')
+)
 
 export default client;
+
+/*{
+"email":"John Doe@gmail",
+
+"passWord":"password",
+
+"firstName":"John",
+
+"lastName":"Doe",
+
+"address":"John Doe",
+
+"gender":true,
+
+"image":"anh1",
+
+"roleId":"staff",
+
+"phoneNumber":"0123456",
+
+"positionId":"banhang"
+}*/

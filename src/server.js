@@ -1,7 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import configViewEngine from "../src/config/viewEngine.js"
-import initWebRouters from "./route/router-staff.js"
+import initWebRouters from "../src/route/router-user.js"
+
 import 'dotenv/config.js'
 let PORT = process.env.PORT || 8751;
 
@@ -12,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 configViewEngine(app)
 initWebRouters(app)
-
 
 app.listen(PORT, () => {
     console.log("Server listening on port: " + PORT);
