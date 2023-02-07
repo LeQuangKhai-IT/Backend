@@ -19,11 +19,16 @@
   },
   "homepage": "https://github.com/LeQuangKhai17027711/Web-quan-li-thong-tin-dich-vu-bao-tri#readme",
   "dependencies": {
+    "@apollo/server": "^4.3.2",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "http": "^0.0.1-security",
     "redis": "^4.0.1",
     "redis-om": "^0.3.6"
   },

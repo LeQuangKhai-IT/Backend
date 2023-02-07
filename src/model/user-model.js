@@ -4,7 +4,7 @@ import client from '../config/init.redis.js'
 /* our entity */
 class User extends Entity { }
 
-/* create a Schema for Staff */
+/* create a Schema for User */
 const userSchema = new Schema(User, {
     email: { type: 'string' },
     passWord: { type: 'string' },
@@ -21,9 +21,11 @@ const userSchema = new Schema(User, {
         dataStructure: "JSON"
     })
 
-/* use the client to create a Repository just for Persons */
+/* use the client to create a Repository just for User */
 export const userRepository = client.fetchRepository(userSchema)
 
+/* create the index for Person */
+await userRepository.createIndex()
 
 
 
