@@ -1,5 +1,5 @@
 import { users } from "../data/staticdata.js"
-import { createNewUser, getAllUser } from '../services/service.js'
+import { createNewUser, getAllUser, getUser } from '../services/service.js'
 import gql from 'graphql-tag';
 
 export const resolvers = {
@@ -8,10 +8,9 @@ export const resolvers = {
     Query: {
         users: async (parent, args) => {
             const users = await getAllUser()
-            console.log(users)
             return users
         },
-        user: (parent, args) => users.find(user => user.id.toString() === args.id)
+        user: async (parent, args) => { return await getUser(args.id) }
     },
 
     // Mutation
