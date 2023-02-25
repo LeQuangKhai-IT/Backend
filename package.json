@@ -29,8 +29,8 @@
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "http": "^0.0.1-security",
-    "redis": "^4.0.1",
-    "redis-om": "^0.3.6"
+    "mongodb": "^5.1.0",
+    "mongoose": "^6.10.0"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",

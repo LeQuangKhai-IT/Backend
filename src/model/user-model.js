@@ -1,32 +1,53 @@
-import { Entity, Schema } from 'redis-om'
-import client from '../config/init.redis.js'
-
-/* our entity */
-class User extends Entity { }
+import mongoose from 'mongoose'
+const { Schema } = mongoose;
 
 /* create a Schema for User */
-const userSchema = new Schema(User, {
-    email: { type: 'string' },
-    passWord: { type: 'string' },
-    firstName: { type: 'string' },
-    lastName: { type: 'string' },
-    address: { type: 'string' },
-    gender: { type: 'boolean' },
-    image: { type: 'string' },
-    roleId: { type: 'string' },
-    phoneNumber: { type: 'string' },
-    positionId: { type: 'string' }
-},
-    {
-        dataStructure: "JSON"
-    })
+const userSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+    passWord: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+    },
+    gender: {
+        type: Boolean,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true,
+    },
+    roleId: {
+        type: String,
+        required: true,
+    },
+    phoneNumber: {
+        type: String,
+    },
+    positionId: {
+        type: String,
+        required: true,
+    }
+})
 
 /* use the client to create a Repository just for User */
-export const userRepository = client.fetchRepository(userSchema)
-
-/* create the index for Person */
-await userRepository.createIndex()
-
+export const userRepository = mongoose.model('users', userSchema)
 
 
 

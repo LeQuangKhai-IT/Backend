@@ -7,7 +7,7 @@ import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from "./schema/schema.js"
-
+import { connectDB } from "./config/connectDB.js"
 
 import 'dotenv/config.js'
 let PORT = process.env.PORT || 8751;
@@ -16,6 +16,7 @@ let PORT = process.env.PORT || 8751;
 let app = new express();
 const httpServer = http.createServer(app)
 
+connectDB()
 const server = new ApolloServer({
     typeDefs,
     resolvers,

@@ -1,6 +1,6 @@
 export const users = [
     {
-        id: 1,
+
         email: "KhaiUseGraphQL",
         passWord: "123456",
         firstName: "Le",
@@ -13,7 +13,7 @@ export const users = [
         positionId: "2"
     },
     {
-        id: 2,
+
         email: "KhaiUseGraphQL2",
         passWord: "1234562",
         firstName: "Le2",

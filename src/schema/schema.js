@@ -1,5 +1,4 @@
-import { users } from "../data/staticdata.js"
-import { createNewUser, getAllUser, getUser } from '../services/service.js'
+import { createNewUser, getAllUser, getUser, updateUser, deleteUser } from '../services/service.js'
 import gql from 'graphql-tag';
 
 export const resolvers = {
@@ -20,8 +19,19 @@ export const resolvers = {
             let masage = await createNewUser(args)
             console.log(masage)
 
+        },
+        updateUser: async (parent, args) => {
+            let masage = await updateUser(args)
+            console.log(masage)
+
+        },
+        deleteUser: async (parent, args) => {
+            let masage = await deleteUser(args)
+            console.log(masage)
+
         }
     },
+
 
     // Subscription 
 
@@ -47,11 +57,14 @@ type User {
 type Query {
     users:[User]
     user (id: ID!): User
+    login (email: String!, passWord: String!): User
 }
 
 # Ghi dữ liệu
 type Mutation {
     createUser(email: String, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, image: String, roleId: String, phoneNumber: String, positionId: String ): User
+    updateUser(id: ID!,email: String, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, image: String, roleId: String, phoneNumber: String, positionId: String ): User
+    deleteUser(id: ID!) : User
 }
 
  # Ghi dữ liệu realtime
