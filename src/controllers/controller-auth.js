@@ -1,20 +1,19 @@
-import { handleUserLogin } from "../services/userService.js"
-export const handleLogin = async (req, res) => {
+import { handleUserLogin } from "../services/loginService.js"
+export const handleLogin = (email, password) => {
+    let userData = {};
 
-    let email = req.body.email;
-    let password = req.body.password;
-
-    if (!email || !password) {
-        return res.status(500).json({
-            errCode: 1,
-            message: 'Missing inputs parameter!'
-        })
-    }
-    let userData = await handleUserLogin(email, password)
-    return res.status(200).json({
-        errCode: userData.errCode,
-        message: userData.message,
-        userData
-    });
-
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!email || !password) {
+                userData.errCode = 1;
+                userData.errMessage = 'Missing inputs parameter!';
+            }
+            else {
+                userData = await handleUserLogin(email, password)
+            }
+            resolve(userData)
+        } catch (error) {
+            reject(error)
+        }
+    })
 }

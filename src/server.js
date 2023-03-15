@@ -1,12 +1,11 @@
 import express from "express";
-
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { expressMiddleware } from '@apollo/server/express4';
-import { typeDefs, resolvers } from "./schema/schema.js"
+import { typeDefs, resolvers } from "./controllers/schema.js"
 import { connectDB } from "./config/connectDB.js"
 
 import 'dotenv/config.js'

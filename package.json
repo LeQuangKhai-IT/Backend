@@ -30,7 +30,8 @@
     "graphql-tag": "^2.12.6",
     "http": "^0.0.1-security",
     "mongodb": "^5.1.0",
-    "mongoose": "^6.10.0"
+    "mongoose": "^6.10.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",

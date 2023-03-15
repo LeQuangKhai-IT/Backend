@@ -1,52 +1,135 @@
-import { userRepository } from '../model/user-model.js'
 import bcryptjs from 'bcryptjs';
+import { userRepository } from '../model/user-model.js'
+import { checkUserEmail } from './loginService.js';
+const salt = bcryptjs.genSaltSync(10);
 
-export const handleUserLogin = (email, password) => {
+
+
+// Hash Password
+const hashUserPassWord = (password) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userData = {}
-            const isExist = await checkUserEmail(email)
-            if (isExist) {
-                const user = await userRepository.search().where('email').equals(email).return.all()
-                if (user) {
-                    let check = await bcryptjs.compareSync(password, user.password);
-                    if (check) {
-                        userData.errCode = 0;
-                        userData.errMessage = "OK";
-                        userData.user;
-                    }
-                    else {
-                        userData.errCode = 3;
-                        userData.errMessage = "Wrong password";
-                    }
-                } else {
-                    userData.errCode = 2;
-                    userData.errMessage = `User's not found!`
-                }
-            }
-            else {
-                userData.errCode = 1;
-                userData.errMessage = `Your's Email isn't exist in your system. please try other email!`;
-                resolve(userData)
-            }
-        } catch (error) {
-            reject(error)
+            const hashPassWord = await bcryptjs.hashSync(password, salt);
+            resolve(hashPassWord)
+        } catch (e) {
+            reject(e)
+        }
+
+    })
+}
+
+// Get All User
+export const getAllUser = async () => {
+
+    return new Promise(async (resolve, reject) => {
+        let userData = {}
+        try {
+            const users = await userRepository.find()
+            userData.errCode = 0;
+            userData.errMessage = "OK";
+            userData.users = users;
+            resolve(userData)
+        } catch (e) {
+            reject(e)
         }
     })
 }
 
-export const checkUserEmail = (userEmail) => {
+// Get 1 User
+export const getUser = async (email) => {
+
+    return new Promise(async (resolve, reject) => {
+        let userData = {}
+        try {
+            const user = await userRepository.findOne({ email: email })
+
+            userData.errCode = 0;
+            userData.errMessage = "OK";
+            userData.user = user;
+            resolve(userData)
+
+        } catch (e) {
+            userData.errCode = 1;
+            userData.errMessage = "User's not found!";
+            resolve(userData)
+        }
+
+    })
+}
+
+// Create 1 User
+export const createNewUser = async (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        let userData = {}
+        try {
+
+            let check = await checkUserEmail(data.email);
+            if (check === true) {
+                userData.errCode = 1;
+                userData.errMessage = "Your email is to used, please try another email!";
+                resolve(userData)
+            }
+            let hashPassWordFromBcryptjs = await hashUserPassWord(data.passWord);
+            data.passWord = hashPassWordFromBcryptjs;
+            const newUser = new userRepository(data)
+            await newUser.save()
+            userData.errCode = 0;
+            userData.errMessage = "Create user success !";
+            resolve(userData)
+        } catch (e) {
+            reject(e)
+        }
+
+    })
+}
+
+// Update 1 User
+export const updateUser = async (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        let userData = {}
+        try {
+            const user = await userRepository.findOne({ email: data.email })
+
+            user.firstName = data.firstName ?? user.firstName ?? null
+            user.lastName = data.lastName ?? user.lastName ?? null
+            user.address = data.address ?? user.address ?? null
+            user.gender = data.gender ?? user.gender ?? null
+            user.image = data.image ?? user.image ?? null
+            user.roleId = data.roleId ?? user.roleId ?? null
+            user.phoneNumber = data.phoneNumber ?? user.phoneNumber ?? null
+            user.positionId = data.positionId ?? user.positionId ?? null
+
+            await user.save()
+            userData.errCode = 0;
+            userData.errMessage = "Update user success!";
+            resolve(userData)
+        } catch (e) {
+            userData.errCode = 1;
+            userData.errMessage = "User's not found!";
+            resolve(userData)
+        }
+    })
+}
+
+//Delete 1 User
+export const deleteUser = async (data) => {
+    let userData = {}
     return new Promise(async (resolve, reject) => {
         try {
-            const user = await userRepository.search().where('email').equals(userEmail).return.all()
-            if (user) {
-                resolve(true)
+            let user = await userRepository.findOne({ email: data.email })
+            if (user === null) {
+                userData.errCode = 1;
+                userData.errMessage = "The user is not exit!";
+                resolve(userData)
             }
-            else {
-                resolve(false)
-            }
-        } catch (error) {
-            reject(error)
+            await userRepository.findOneAndDelete(data.email)
+            userData.errCode = 0;
+            userData.errMessage = "User have id " + data.email + " deleted!";
+            resolve(userData)
+        } catch (e) {
+            reject(e)
         }
     })
 }
