@@ -33,17 +33,18 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    roleId: {
+    role: {
         type: String,
         required: true,
     },
     phoneNumber: {
         type: String,
     },
-    positionId: {
+    position: {
         type: String,
         required: true,
-    }
+    },
+
 })
 
 /* use the client to create a Repository just for User */
