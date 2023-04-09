@@ -40,7 +40,7 @@ export const resolvers = {
                 userData.errCode = 2;
                 userData.errMessage = "User must be authenticated.";
             }
-            console.log(userData)
+
             return userData
         },
 
@@ -94,9 +94,9 @@ type User {
 }
 
 enum Role {
-    ADMIN
-    STAFF
-    CUSTOMER
+    Admin
+    Staff
+    Customer
   }
 
 enum Status {

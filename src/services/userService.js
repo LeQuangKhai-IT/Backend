@@ -91,9 +91,9 @@ export const updateUser = async (data) => {
         let userData = {}
         try {
             const user = await userRepository.findOne({ email: data.email })
-            // let hashPassWordFromBcryptjs = await hashUserPassWord(data.passWord);
-            // data.passWord = hashPassWordFromBcryptjs;
-            // user.passWord = data.passWord ?? user.firstName ?? undefined
+            let hashPassWordFromBcryptjs = await hashUserPassWord(data.passWord);
+            data.passWord = hashPassWordFromBcryptjs;
+            user.passWord = data.passWord ?? user.firstName ?? undefined
             user.firstName = data.firstName ?? user.firstName ?? null
             user.lastName = data.lastName ?? user.lastName ?? null
             user.address = data.address ?? user.address ?? null
