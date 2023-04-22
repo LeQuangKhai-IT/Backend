@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 /* create a Schema for User */
 const serviceSchema = new Schema({
-    id: {
+    idSer: {
         type: String,
         required: true,
         unique: true,
@@ -22,7 +22,7 @@ const serviceSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
+    descript: {
         type: String,
     },
     type: {
@@ -31,5 +31,5 @@ const serviceSchema = new Schema({
     },
 })
 
-/* use the client to create a Repository just for User */
+/* use the client to create a Repository just for Service */
 export const serviceRepository = mongoose.model('services', serviceSchema)

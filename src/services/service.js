@@ -1,65 +1,64 @@
-import bcryptjs from 'bcryptjs';
-import { serviceRepository } from '../model/service-model'
+import { serviceRepository } from '../model/service-model.js'
 
-// Get All User
-export const getAllUser = async () => {
+// Get All Service
+export const getAllService = async () => {
 
     return new Promise(async (resolve, reject) => {
-        let userData = {}
+        let serviceData = {}
         try {
-            const users = await userRepository.find()
-            userData.errCode = 0;
-            userData.errMessage = "OK";
-            userData.users = users;
-            resolve(userData)
+            const services = await serviceRepository.find()
+            serviceData.errCode = 0;
+            serviceData.errMessage = "OK";
+            serviceData.services = services;
+            resolve(serviceData)
         } catch (e) {
             reject(e)
         }
     })
 }
 
-// Get 1 User
-export const getUser = async (email) => {
+// Get 1 Service
+export const getService = async (id) => {
 
     return new Promise(async (resolve, reject) => {
-        let userData = {}
+        let serviceData = {}
         try {
-            const user = await userRepository.findOne({ email: email })
-
-            userData.errCode = 0;
-            userData.errMessage = "OK";
-            userData.user = user;
-            resolve(userData)
-
+            const service = await serviceRepository.findOne({ idSer: id })
+            if (service) {
+                serviceData.errCode = 0;
+                serviceData.errMessage = "OK";
+                serviceData.service = service;
+                resolve(serviceData)
+            } else {
+                serviceData.errCode = 1;
+                serviceData.errMessage = "Service's not found!";
+                resolve(serviceData)
+            }
         } catch (e) {
-            userData.errCode = 1;
-            userData.errMessage = "User's not found!";
-            resolve(userData)
         }
-
     })
 }
 
-// Create 1 User
-export const createNewUser = async (data) => {
+// Create 1 Service
+export const createNewService = async (data) => {
 
     return new Promise(async (resolve, reject) => {
-        let userData = {}
+        let serviceData = {}
         try {
 
-            let check = await checkUserEmail(data.email);
+            let check = await checkServiceID(data.idSer);
+
             if (check === true) {
-                userData.errCode = 1;
-                userData.errMessage = "Your email is to used, please try another email!";
-                resolve(userData)
+                serviceData.errCode = 1;
+                serviceData.errMessage = "Your Service exit!";
+                resolve(serviceData)
             }
-            let hashPassWordFromBcryptjs = await hashUserPassWord(data.passWord);
-            data.passWord = hashPassWordFromBcryptjs;
-            const newUser = new userRepository(data)
-            await newUser.save()
-            userData.errCode = 0;
-            userData.errMessage = "Create user success !";
-            resolve(userData)
+
+            const newService = new serviceRepository(data)
+            await newService.save()
+            serviceData.errCode = 0;
+            serviceData.errMessage = "Create service success !";
+            resolve(serviceData)
         } catch (e) {
             reject(e)
         }
@@ -67,56 +66,70 @@ export const createNewUser = async (data) => {
     })
 }
 
-// Update 1 User
-export const updateUser = async (data) => {
+// Update 1 Service
+export const updateService = async (data) => {
 
     return new Promise(async (resolve, reject) => {
-        let userData = {}
+        let serviceData = {}
         try {
-            const user = await userRepository.findOne({ email: data.email })
-            let hashPassWordFromBcryptjs = undefined;
-            if (data.passWord != null) {
-                hashPassWordFromBcryptjs = await hashUserPassWord(data.passWord);
-            }
-            data.passWord = hashPassWordFromBcryptjs;
-            user.passWord = data.passWord ?? user.passWord ?? undefined
-            user.firstName = data.firstName ?? user.firstName ?? null
-            user.lastName = data.lastName ?? user.lastName ?? null
-            user.address = data.address ?? user.address ?? null
-            user.gender = data.gender ?? user.gender ?? null
-            user.role = data.role ?? user.role ?? null
-            user.phoneNumber = data.phoneNumber ?? user.phoneNumber ?? null
+            const service = await serviceRepository.findOne({ idSer: data.idSer })
+            if (service) {
+                service.title = data.title ?? service.title ?? null
+                service.image = data.image ?? service.image ?? null
+                service.fee = data.fee ?? service.fee ?? null
+                service.descript = data.descript ?? service.descript ?? null
+                service.type = data.type ?? service.type ?? null
 
-            await user.save()
-            userData.errCode = 0;
-            userData.errMessage = "Update user success!";
-            resolve(userData)
+                await service.save()
+                serviceData.errCode = 0;
+                serviceData.errMessage = "Update service success!";
+                resolve(serviceData)
+            }
+            else {
+                serviceData.errCode = 1;
+                serviceData.errMessage = "Service's not found!";
+                resolve(serviceData)
+            }
         } catch (e) {
-            userData.errCode = 1;
-            userData.errMessage = "User's not found!";
-            resolve(userData)
         }
     })
 }
 
-//Delete 1 User
-export const deleteUser = async (email) => {
+//Delete 1 Service
+export const deleteService = async (id) => {
 
-    let userData = {}
+    let serviceData = {}
     return new Promise(async (resolve, reject) => {
         try {
-            let user = await userRepository.findOne({ email: email })
-            if (user === null) {
-                userData.errCode = 1;
-                userData.errMessage = "The user is not exit!";
-                resolve(userData)
+            let service = await serviceRepository.findOne({ idSer: id })
+            if (service === null) {
+                serviceData.errCode = 1;
+                serviceData.errMessage = "The service is not exit!";
+                resolve(serviceData)
             }
-            await userRepository.findOneAndDelete({ email: email })
-            userData.errCode = 0;
-            userData.errMessage = "User have id " + email + " deleted!";
-            resolve(userData)
+            await serviceRepository.findOneAndDelete({ idSer: id })
+            serviceData.errCode = 0;
+            serviceData.errMessage = "Service have id " + id + " deleted!";
+            resolve(serviceData)
         } catch (e) {
             reject(e)
+        }
+    })
+}
+
+export const checkServiceID = (idService) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            const service = await serviceRepository.findOne({ idSer: idService })
+            if (service) {
+                resolve(true)
+            }
+            else {
+                resolve(false)
+            }
+        } catch (error) {
+            reject(error)
         }
     })
 }
