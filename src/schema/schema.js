@@ -62,14 +62,13 @@ export const resolvers = {
             return masage
         },
         login: async (parent, args) => {
-            const user = await handleLogin(args.email, args.passWord)
+            const user = await handleLogin(args.email, args.passWord, args.role)
             return user
         },
         register: async (parent, args) => {
             const user = await registerUser(args)
             return user
         },
-
     },
 
 
@@ -87,10 +86,8 @@ type User {
     lastName: String!
     address: String
     gender: Boolean!
-    image: String
     role: Role!
-    phoneNumber: String
-    position: Position!
+    phoneNumber: String 
 }
 
 enum Role {
@@ -98,20 +95,6 @@ enum Role {
     Staff
     Customer
   }
-
-enum Status {
-    New
-    Confirmed
-    Done
-    Cancel
-  }
-
-enum Position {
-    None
-    Nomal
-    VIP
-}
-
 
 interface MutationResponse {
     errCode: String!
@@ -144,10 +127,10 @@ type Query {
 
 # Ghi dữ liệu
 type Mutation {
-    createUser(email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, image: String, role: Role, phoneNumber: String, position: Position ): Message
-    updateUser(email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, image: String, role: Role, phoneNumber: String, position: Position ): Message
-    register (email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, image: String, role: Role, phoneNumber: String, position: Position ):Message
-    login (email: String!, passWord: String!): MessageUser
+    createUser(email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, role: Role, phoneNumber: String): Message
+    updateUser(email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, role: Role, phoneNumber: String ): Message
+    register (email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, role: Role, phoneNumber: String ):Message
+    login (email: String!, passWord: String!, role: String!): MessageUser
     deleteUser(email: String! ) : Message
 }
 

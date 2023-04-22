@@ -1,22 +1,5 @@
 import bcryptjs from 'bcryptjs';
-import { userRepository } from '../model/user-model.js'
-import { checkUserEmail } from './loginService.js';
-const salt = bcryptjs.genSaltSync(10);
-
-
-
-// Hash Password
-const hashUserPassWord = (password) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const hashPassWord = await bcryptjs.hashSync(password, salt);
-            resolve(hashPassWord)
-        } catch (e) {
-            reject(e)
-        }
-
-    })
-}
+import { serviceRepository } from '../model/service-model'
 
 // Get All User
 export const getAllUser = async () => {

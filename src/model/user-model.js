@@ -29,10 +29,6 @@ const userSchema = new Schema({
         type: Boolean,
         required: true,
     },
-    image: {
-        type: String,
-        required: true,
-    },
     role: {
         type: String,
         required: true,
@@ -40,11 +36,6 @@ const userSchema = new Schema({
     phoneNumber: {
         type: String,
     },
-    position: {
-        type: String,
-        required: true,
-    },
-
 })
 
 /* use the client to create a Repository just for User */

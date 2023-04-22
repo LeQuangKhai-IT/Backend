@@ -25,6 +25,7 @@ export const registerUser = async (data) => {
         try {
 
             let check = await checkUserEmail(data.email);
+
             if (check === true) {
                 userData.errCode = 1;
                 userData.errMessage = "Your email is to used, please try another email!";

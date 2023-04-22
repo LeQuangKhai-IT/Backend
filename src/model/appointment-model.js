@@ -14,7 +14,7 @@ const serviceSchema = new Schema({
         required: true,
     },
     time: {
-        type: Boolean,
+        type: String,
         required: true,
     },
 })

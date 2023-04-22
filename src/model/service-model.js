@@ -25,10 +25,6 @@ const serviceSchema = new Schema({
     description: {
         type: String,
     },
-    author: {
-        type: Boolean,
-        required: true,
-    },
     type: {
         type: String,
         required: true,
@@ -36,4 +32,4 @@ const serviceSchema = new Schema({
 })
 
 /* use the client to create a Repository just for User */
-export const userRepository = mongoose.model('services', serviceSchema)
+export const serviceRepository = mongoose.model('services', serviceSchema)
