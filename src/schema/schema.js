@@ -1,5 +1,7 @@
 import { createNewUser, getAllUser, getUser, updateUser, deleteUser } from '../services/userService.js'
 import { getAllService, getService, createNewService, updateService, deleteService } from '../services/service.js'
+import { getAllAppointment, getAppointment, createNewAppointment, updateAppointment, deleteAppointment } from '../services/appointmentService.js'
+import { sendEmail } from '../services/send-mail.js'
 import { handleLogin } from '../services/loginService.js';
 import { registerUser } from '../services/registerService.js'
 import { verifyUser } from '../middleware/authJwt.js';
@@ -54,6 +56,19 @@ export const resolvers = {
             service = await getService(args.idSer)
             return service;
         },
+
+        // Appointment Query
+
+        appointments: async (parent, args) => {
+            const appointment = await getAllAppointment()
+            return appointment
+        },
+
+        appointment: async (parent, args, context, info) => {
+            let appointment = {}
+            appointment = await getAppointment(args.idApp)
+            return appointment;
+        },
     },
 
     // Mutation
@@ -91,7 +106,24 @@ export const resolvers = {
         },
         deleteService: async (parent, args) => {
             let masage = await deleteService(args.idSer)
+            return masage
+        },
 
+        // Appointment
+        createAppointment: async (parent, args) => {
+            let masage = await createNewAppointment(args)
+            return masage
+        },
+        updateAppointment: async (parent, args) => {
+            let masage = await updateAppointment(args)
+            return masage
+        },
+        deleteAppointment: async (parent, args) => {
+            let masage = await deleteAppointment(args.idApp)
+            return masage
+        },
+        sendMail: async (parent, args) => {
+            let masage = await sendEmail(args)
             return masage
         },
     },
@@ -121,6 +153,25 @@ type Service {
     fee: String!
     descript: String!
     type: Type!
+}
+
+type Appointment {
+    idApp: String!
+    name:String!
+    email: String!
+    phone: String!
+    time: String!
+    note: String!
+}
+
+type Sendmail {
+    nameFrom: String!
+    nameTo:String!
+    emailFrom: String!
+    emailTo: String!
+    phoneFrom: String!
+    time: String!
+    content: String!
 }
 
 enum Type {
@@ -158,6 +209,12 @@ type MessageService implements MutationResponse {
     service : Service
 }
 
+type MessageAppointment implements MutationResponse {
+    errCode: String!
+    errMessage: String!
+    appointment : Appointment
+}
+
 type MessageAllUser implements MutationResponse {
     errCode: String!
     errMessage: String!
@@ -170,12 +227,20 @@ type MessageAllService implements MutationResponse {
     services:[Service]
 }
 
+type MessageAllAppointment implements MutationResponse {
+    errCode: String!
+    errMessage: String!
+    appointments:[Appointment]
+}
+
 # ROOT TYPE đọc dữ liệu
 type Query {
     users: MessageAllUser
     user (email: String!):  MessageUser
     services: MessageAllService   
-    service (idSer: String!):  MessageService    
+    service (idSer: String!):  MessageService  
+    appointments: MessageAllAppointment   
+    appointment (idApp: String!):  MessageAppointment  
 }
 
 # Ghi dữ liệu
@@ -183,12 +248,20 @@ type Mutation {
     createUser(email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, role: Role, phoneNumber: String): Message
     updateUser(email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, role: Role, phoneNumber: String ): Message
     deleteUser(email: String! ) : Message
+
     register (email: String!, passWord:String, firstName: String, lastName: String, address: String, gender: Boolean, role: Role, phoneNumber: String ):Message
     login (email: String!, passWord: String!, role: String!): MessageUser
+
     createService(idSer: String!, title:String, image: String, fee: String, descript: String, type: Type): Message
     updateService(idSer: String!, title:String, image: String, fee: String, descript: String, type: Type): Message
     deleteService(idSer: String! ) : Message
 
+     
+    createAppointment(idApp: String!, name:String, email: String, phone: String, time: String, note: String): Message
+    updateAppointment(idApp: String!, name:String, email: String, phone: String, time: String, note: String): Message
+    deleteAppointment(idApp: String! ) : Message
+
+    sendMail(nameFrom: String!, nameTo:String ,emailFrom: String ,emailTo: String ,phoneFrom: String ,time: String ,content: String):Message
 }
 
  # Ghi dữ liệu realtime

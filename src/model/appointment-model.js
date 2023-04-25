@@ -2,14 +2,22 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose;
 
 /* create a Schema for User */
-const serviceSchema = new Schema({
-    id: {
+const appointmentSchema = new Schema({
+    idApp: {
         type: String,
         required: true,
         unique: true,
         trim: true
     },
-    status: {
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    phone: {
         type: String,
         required: true,
     },
@@ -17,7 +25,11 @@ const serviceSchema = new Schema({
         type: String,
         required: true,
     },
+    note: {
+        type: String,
+        required: true,
+    },
 })
 
 /* use the client to create a Repository just for User */
-export const userRepository = mongoose.model('services', serviceSchema)
+export const appointmentRepository = mongoose.model('appointments', appointmentSchema)
