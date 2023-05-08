@@ -25,6 +25,7 @@ export const sendEmail = async (data) => {
            Time send : ${data.time}`, // html body
         });
 
+        sendData.idApp = data.idApp;
         sendData.errCode = 0;
         sendData.errMessage = "Send email success!";
         resolve(sendData)

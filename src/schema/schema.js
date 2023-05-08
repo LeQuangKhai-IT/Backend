@@ -160,11 +160,14 @@ type Appointment {
     name:String!
     email: String!
     phone: String!
+    product: String!
     time: String!
     note: String!
+    check: Boolean!
 }
 
 type Sendmail {
+    idApp: String!
     nameFrom: String!
     nameTo:String!
     emailFrom: String!
@@ -201,6 +204,12 @@ type MessageUser implements MutationResponse {
     errMessage: String!
     accessToken: String
     user : User
+}
+
+type MessageEmail implements MutationResponse {
+    errCode: String!
+    errMessage: String!
+    idApp : String!
 }
 
 type MessageService implements MutationResponse {
@@ -257,11 +266,11 @@ type Mutation {
     deleteService(idSer: String! ) : Message
 
      
-    createAppointment(idApp: String!, name:String, email: String, phone: String, time: String, note: String): Message
-    updateAppointment(idApp: String!, name:String, email: String, phone: String, time: String, note: String): Message
+    createAppointment(idApp: String!, name:String, email: String, phone: String, product: String, time: String, note: String, check: Boolean): Message
+    updateAppointment(idApp: String!, name:String, email: String, phone: String, product: String, time: String, note: String, check: Boolean): Message
     deleteAppointment(idApp: String! ) : Message
 
-    sendMail(nameFrom: String!, nameTo:String ,emailFrom: String ,emailTo: String ,phoneFrom: String ,time: String ,content: String):Message
+    sendMail(idApp :String! ,nameFrom: String!, nameTo:String ,emailFrom: String ,emailTo: String ,phoneFrom: String ,time: String ,content: String): MessageEmail
 }
 
  # Ghi dữ liệu realtime

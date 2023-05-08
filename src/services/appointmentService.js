@@ -75,9 +75,11 @@ export const updateAppointment = async (data) => {
             const appointment = await appointmentRepository.findOne({ idApp: data.idApp })
             if (appointment) {
                 appointment.name = data.name ?? appointment.name ?? null
+                appointment.product = data.product ?? appointment.product ?? null
                 appointment.email = data.email ?? appointment.email ?? null
                 appointment.phone = data.phone ?? appointment.phone ?? null
                 appointment.note = data.note ?? appointment.note ?? null
+                appointment.check = data.check ?? appointment.check ?? null
 
                 await appointment.save()
                 appointmentData.errCode = 0;

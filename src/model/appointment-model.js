@@ -21,12 +21,20 @@ const appointmentSchema = new Schema({
         type: String,
         required: true,
     },
+    product: {
+        type: String,
+        required: true,
+    },
     time: {
         type: String,
         required: true,
     },
     note: {
         type: String,
+        required: true,
+    },
+    check: {
+        type: Boolean,
         required: true,
     },
 })
