@@ -19,7 +19,7 @@ export const resolvers = {
         user: async (parent, args, context, info) => {
             let userData = {}
             let userauth = {}
-            console.log(context.token)
+
             if (context.token) {
                 var parts = context.token.split(" ");
 

@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { expressMiddleware } from '@apollo/server/express4';
-import { typeDefs, resolvers } from "./schema/schema.js"
+import { typeDefs, resolvers } from "./controllers/controller.js"
 import { connectDB } from "./config/connectDB.js"
 
 
